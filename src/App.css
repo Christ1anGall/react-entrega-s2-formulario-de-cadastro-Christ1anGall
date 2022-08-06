@@ -1,0 +1,16 @@
+.App {
+  text-align: center;
+}
+
+h1 {
+  text-align: center;
+
+  color: #ff577f;
+}
+
+.NavBar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 5rem;
+}
