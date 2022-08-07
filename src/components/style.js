@@ -14,6 +14,44 @@ export const FormMain = styled.form`
   border-radius: 3.20867px;
   margin: 0 auto 2rem;
 
+  .errorDiv {
+    display: flex;
+
+    svg {
+      top: 15px;
+      color: red;
+      position: relative;
+      left: -25px;
+      height: 100%;
+    }
+    span {
+      display: none;
+      position: absolute;
+      background-color: #f10;
+      padding: 4px 15px;
+      border-radius: 3px;
+      width: 5.6rem;
+      margin-left: 16.5rem;
+      margin-top: 10px;
+      text-align: center;
+      &::before {
+        content: "";
+        border-style: solid;
+        border-width: 10px 7px 0 7px;
+        transform: rotate(90deg);
+        border-color: #f10 transparent;
+        position: absolute;
+        top: 4px;
+        left: -7px;
+      }
+    }
+    &:hover {
+      span {
+        display: flex;
+      }
+    }
+  }
+
   label {
     font-weight: 400;
     font-size: 9.772px;
@@ -32,14 +70,13 @@ export const FormMain = styled.form`
   input,
   select {
     padding-left: 16px;
-    border: none;
+    border: 2px solid transparent;
     margin-bottom: 1rem;
     border-radius: 4px;
     background: rgba(52, 59, 65, 1);
     width: 14.7rem;
     height: 2.5rem;
     color: white;
-    border: 2px solid transparent;
   }
   select {
     width: 16rem;
@@ -94,9 +131,6 @@ export const Container = styled.div`
     left: -30px;
     top: -9px;
     cursor: pointer;
-  }
-
-  svg:hover > input {
   }
 `;
 

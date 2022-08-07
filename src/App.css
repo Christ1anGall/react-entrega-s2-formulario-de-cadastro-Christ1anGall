@@ -10,7 +10,8 @@ h1 {
 
 .NavBar {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+  gap: 2rem;
   align-items: center;
   margin-top: 5rem;
 }

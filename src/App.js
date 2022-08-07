@@ -3,7 +3,7 @@ import Global from "./style/global";
 import Routes from "./routes";
 import "./App.css";
 import ButtonBack from "./components/Button/style";
-
+import { ToastContainer } from "react-toastify";
 function App() {
   let { pathname: location } = useLocation();
 
@@ -15,6 +15,7 @@ function App() {
         {location === "/register" && <ButtonBack to="/">Voltar</ButtonBack>}
       </div>
       <Routes />
+      <ToastContainer />
     </>
   );
 }

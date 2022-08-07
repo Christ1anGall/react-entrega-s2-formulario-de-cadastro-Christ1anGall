@@ -1,31 +1,84 @@
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { ImEye } from "react-icons/im";
 import { Container, FormMain, LinkForm } from "./style";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useNavigate } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
+import { BiErrorCircle } from "react-icons/bi";
+import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import { ImEye } from "react-icons/im";
+import { schemaRegister, schemaLogin } from "./schema/schema";
+import { useEffect, useState } from "react";
+import api from "../api/api";
+
 export const FormLogin = () => {
-  const { register, handleSubmit } = useForm();
+  let navigate = useNavigate();
+
   const [showPassword, setShowPassword] = useState(true);
+  const [user, setUser] = useState({});
+  const [infoLoginPasswordRed, setInfoLoginPasswordRed] = useState("white");
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schemaLogin),
+  });
 
   const onSubmit = (data) => {
-    console.log(data);
+    api
+      .post("/sessions", data)
+      .then((res) => {
+        const notify = () =>
+          toast.success(`Bem vindo ${res.data.user.name}!`, {
+            theme: "dark",
+          });
+        setUser(res.data.user);
+        console.log();
+        window.localStorage.setItem("@TOKEN", res.data.token);
+        window.localStorage.setItem("@USERID", res.data.user.id);
+        notify();
+        navigate("../dashboard", { replace: true });
+      })
+      .catch((err) => {
+        const notify = () =>
+          toast.error(`ops!! email ou senha não confere!`, {
+            theme: "dark",
+          });
+        notify();
+      });
   };
+
+  let errorPassword = errors.password;
+  useEffect(() => {
+    if (errorPassword) {
+      setInfoLoginPasswordRed("red");
+    } else {
+      setInfoLoginPasswordRed("white");
+    }
+  }, [errorPassword]);
 
   return (
     <FormMain onSubmit={handleSubmit(onSubmit)}>
       <h1>Login</h1>
 
       <label htmlFor="email">Email</label>
-      <input placeholder="Email" {...register("email")} />
+
+      <div className="errorDiv">
+        <input placeholder="Email" {...register("email")} />
+        {errors.email && <BiErrorCircle />}
+      </div>
 
       <label htmlFor="password">Senha</label>
-
       <Container>
         <input
           placeholder="Senha"
           type={showPassword ? "password" : "text"}
           {...register("password")}
         />
+
         <ImEye
+          color={infoLoginPasswordRed}
           onClick={() => {
             setShowPassword(!showPassword);
           }}
@@ -43,10 +96,39 @@ export const FormLogin = () => {
 };
 
 export const FormRegister = () => {
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schemaRegister),
+  });
+  let navigate = useNavigate();
 
   const onSubmit = (data) => {
-    console.log(data);
+    const { email, password, name, bio, contact, course_module } = data;
+
+    const dataSend = {
+      email,
+      password,
+      name,
+      bio,
+      contact,
+      course_module,
+    };
+
+    api
+      .post("/users", dataSend)
+      .then((res) => {
+        window.localStorage.setItem("@USERID", res.data.user.id);
+        const notify = () => toast("Conta criada com sucesso!");
+        notify();
+        navigate("../login", { replace: true });
+      })
+      .catch(() => {
+        const notifyError = () => toast("Ops! Algo deu errado!");
+        notifyError();
+      });
   };
 
   return (
@@ -55,39 +137,70 @@ export const FormRegister = () => {
       <p>Rapido e grátis, vamos nessa</p>
 
       <label htmlFor="name">Nome</label>
-      <input placeholder="digite aqui seu nome" {...register("nome")} />
+      <div className="errorDiv">
+        <input placeholder="digite aqui seu nome" {...register("name")} />
+        {errors.name && <BiErrorCircle color="red" />}
+      </div>
 
       <label htmlFor="email">Email</label>
-      <input placeholder="digite aqui seu email" {...register("email")} />
+      <div className="errorDiv">
+        <input placeholder="digite aqui seu email" {...register("email")} />
+        {errors.email && <BiErrorCircle color="red" />}
+      </div>
 
       <label htmlFor="password">Senha</label>
-      <input
-        placeholder="Digite aqui sua senha"
-        type="password"
-        {...register("password")}
-      />
+      <div className="errorDiv">
+        <input
+          placeholder="Digite aqui sua senha"
+          type="password"
+          {...register("password")}
+        />
+        {errors.password && (
+          <>
+            <BiErrorCircle color="red" />{" "}
+            <span>{errors.password?.message}</span>
+          </>
+        )}
+      </div>
 
       <label htmlFor="passwordConfirm">Confirmar Senha</label>
-      <input
-        type="password"
-        placeholder="Confirme sua senha"
-        {...register("passwordConfirm")}
-      />
+      <div className="errorDiv">
+        <input
+          type="password"
+          placeholder="Confirme sua senha"
+          {...register("passwordConfirm")}
+        />
+        {errors.passwordConfirm && <BiErrorCircle color="red" />}
+      </div>
 
       <label htmlFor="bio">Bio</label>
-      <input placeholder="Fale sobre você" {...register("bio")} />
+      <div className="errorDiv">
+        <input placeholder="Fale sobre você" {...register("bio")} />
+        {errors.bio && <BiErrorCircle color="red" />}
+      </div>
 
       <label htmlFor="contact">Contato</label>
-      <input placeholder="Opções de contato" {...register("contact")} />
+      <div className="errorDiv">
+        <input placeholder="Opções de contato" {...register("contact")} />
+        {errors.contact && <BiErrorCircle color="red" />}
+      </div>
 
-      <label htmlFor="module">Selecionar módulo</label>
-      <select name="module" id="module" {...register("module")}>
-        <option value="1">Primeiro Módulo</option>
-        <option value="2">Segundo Módulo</option>
-        <option value="3">Terceiro Módulo</option>
-        <option value="4">Quarto Módulo</option>
-        <option value="5">Quinto Módulo</option>
-        <option value="6">Sexto Módulo</option>
+      <label htmlFor="course_module">Selecionar módulo</label>
+      <select
+        name="course_module"
+        id="course_module"
+        {...register("course_module")}
+      >
+        <option value="Primeiro Módulo (Introdução ao Frontend)">
+          Primeiro Módulo
+        </option>
+        <option value="Segundo Módulo (Frontend Avançado)">
+          Segundo Módulo
+        </option>
+        <option value="Terceiro Módulo (Introdução ao Backend)">
+          Terceiro Módulo
+        </option>
+        <option value="Quarto Módulo (Backend Avançado)">Quarto Módulo</option>
       </select>
 
       <button type="submit">Cadastrar</button>
