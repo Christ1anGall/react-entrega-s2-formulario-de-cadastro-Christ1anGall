@@ -10,11 +10,10 @@ import { schemaRegister, schemaLogin } from "./schema/schema";
 import { useEffect, useState } from "react";
 import api from "../api/api";
 
-export const FormLogin = () => {
+export const FormLogin = ({ setUser }) => {
   let navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(true);
-  const [user, setUser] = useState({});
   const [infoLoginPasswordRed, setInfoLoginPasswordRed] = useState("white");
 
   const {
@@ -34,13 +33,13 @@ export const FormLogin = () => {
             theme: "dark",
           });
         setUser(res.data.user);
-        console.log();
         window.localStorage.setItem("@TOKEN", res.data.token);
         window.localStorage.setItem("@USERID", res.data.user.id);
         notify();
-        navigate("../dashboard", { replace: true });
+        navigate("../Dashboard", { replace: true });
       })
       .catch((err) => {
+        console.log(err);
         const notify = () =>
           toast.error(`ops!! email ou senha não confere!`, {
             theme: "dark",
@@ -125,8 +124,8 @@ export const FormRegister = () => {
         notify();
         navigate("../login", { replace: true });
       })
-      .catch(() => {
-        const notifyError = () => toast("Ops! Algo deu errado!");
+      .catch((err) => {
+        const notifyError = () => toast(`Ops! ${err.response.data.message}`);
         notifyError();
       });
   };

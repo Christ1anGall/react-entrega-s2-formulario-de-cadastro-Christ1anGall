@@ -10,10 +10,13 @@ function App() {
   return (
     <>
       <Global />
-      <div className="NavBar">
-        <h1>Kenzie Hub</h1>
-        {location === "/register" && <ButtonBack to="/">Voltar</ButtonBack>}
-      </div>
+
+      {location.toLowerCase() !== "/dashboard" && (
+        <div className="NavBar">
+          <h1>Kenzie Hub</h1>
+          {location === "/register" && <ButtonBack to="/">Voltar</ButtonBack>}
+        </div>
+      )}
       <Routes />
       <ToastContainer />
     </>
