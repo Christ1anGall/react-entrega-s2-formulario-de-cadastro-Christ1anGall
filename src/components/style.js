@@ -5,14 +5,14 @@ export const FormMain = styled.form`
   display: flex;
   justify-content: center;
   flex-direction: column;
-  text-align: left;
+
   color: white;
   width: 17rem;
   padding: 3rem 0rem 2.5rem 1rem;
   background: var(--gray-3);
   box-shadow: 0px 3.20867px 32.0867px -8.02168px rgba(0, 0, 0, 0.25);
   border-radius: 3.20867px;
-  margin: 0 auto 2rem;
+  margin: 0 auto;
 
   .errorDiv {
     display: flex;
@@ -31,18 +31,18 @@ export const FormMain = styled.form`
       padding: 4px 15px;
       border-radius: 3px;
       width: 5.6rem;
-      margin-left: 16.5rem;
-      margin-top: 10px;
+      margin-left: 9.5rem;
+      margin-top: -50px;
       text-align: center;
       &::before {
         content: "";
         border-style: solid;
         border-width: 10px 7px 0 7px;
-        transform: rotate(90deg);
+        transform: rotate(0deg);
         border-color: #f10 transparent;
         position: absolute;
-        top: 4px;
-        left: -7px;
+        top: 45px;
+        left: 0px;
       }
     }
     &:hover {
@@ -74,7 +74,7 @@ export const FormMain = styled.form`
     margin-bottom: 1rem;
     border-radius: 4px;
     background: rgba(52, 59, 65, 1);
-    width: 14.7rem;
+    width: 14.5rem;
     height: 2.5rem;
     color: white;
   }
@@ -112,13 +112,44 @@ export const FormMain = styled.form`
     margin-top: 0.7rem;
     margin-bottom: 1.5rem;
   }
+  .NavDiv {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    a {
+      text-align: center;
+    }
+  }
+  @media only screen and (min-width: 600px) {
+    width: 20rem;
+    padding: 3rem 0rem 2.5rem 1.5rem;
+
+    input {
+      width: 17rem;
+    }
+    select {
+      width: 18.5rem;
+    }
+    button {
+      width: 18.5rem;
+    }
+    .NavDiv {
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+      margin-right: 1.5rem;
+      a {
+        text-align: center;
+      }
+    }
+  }
 `;
 
 export const Container = styled.div`
   display: flex;
   align-items: center;
   border-radius: 5px;
-
+  width: 100%;
   input {
     border: none;
     width: 100%;
@@ -131,6 +162,9 @@ export const Container = styled.div`
     left: -30px;
     top: -9px;
     cursor: pointer;
+  }
+  @media only screen and (min-width: 600px) {
+    width: 19.3rem;
   }
 `;
 
@@ -145,4 +179,8 @@ export const LinkForm = styled(Link)`
   font-weight: 500;
   font-size: 12.8347px;
   line-height: 21px;
+
+  @media only screen and (min-width: 600px) {
+    padding: 0.8rem 5.5rem;
+  }
 `;

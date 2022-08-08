@@ -86,7 +86,7 @@ export const FormLogin = ({ setUser }) => {
 
       <button type="submit">Entrar</button>
 
-      <div>
+      <div className="NavDiv">
         <p>Ainda não possui uma conta?</p>
         <LinkForm to={"/register"}>Cadastre-se</LinkForm>
       </div>
