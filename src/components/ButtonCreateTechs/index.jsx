@@ -1,13 +1,23 @@
+import { useContext } from "react";
+import { ModalProvider } from "../../context/ModalProvider";
 import TechsMainContainer from "./style";
 
-/* import { UserContext } from "../../context/UserProvider";
-const { user } = useContext(UserContext); */
-
 const ButtonCreateTechs = () => {
+  const { isModalON, setModal, setTitle, setType } = useContext(ModalProvider);
+
   return (
     <TechsMainContainer className="ButtonCreateTechsContainer">
-      <h4>Tecnologias</h4>
-      <button>+</button>
+      <h4 className="title-Create">Tecnologias</h4>
+      <button
+        className="button-Create"
+        onClick={() => {
+          setTitle("Cadastrar Tecnologia");
+          setType("create");
+          setModal(!isModalON);
+        }}
+      >
+        +
+      </button>
     </TechsMainContainer>
   );
 };

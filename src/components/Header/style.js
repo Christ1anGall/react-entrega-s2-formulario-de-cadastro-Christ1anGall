@@ -1,11 +1,15 @@
 import styled from "styled-components";
 
 const HeaderMain = styled.nav`
+  position: fixed;
   display: flex;
+  width: 100%;
   border-bottom: 1px solid var(--gray-3);
   align-items: center;
-  justify-content: space-between;
-  padding: 0 1rem;
+  justify-content: space-around;
+  gap: 20%;
+
+  background: var(--gray-4);
 
   button {
     background: var(--gray-3);
@@ -17,8 +21,8 @@ const HeaderMain = styled.nav`
 
   @media only screen and (min-width: 600px) {
     flex-direction: row;
-    padding: 0 22%;
-    justify-content: space-between;
+    width: 100%;
+    justify-content: space-evenly;
   }
 `;
 

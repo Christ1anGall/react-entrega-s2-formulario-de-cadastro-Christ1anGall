@@ -5,12 +5,13 @@ const TechsMainContainer = styled.div`
   width: 100%;
   justify-content: space-between;
   align-items: center;
-  h4 {
+
+  .title-Create {
     font-weight: 600;
     font-size: 16px;
     line-height: 18px;
   }
-  button {
+  .button-Create {
     background: var(--gray-3);
     color: var(--gray-0);
     border: transparent;

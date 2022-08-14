@@ -14,7 +14,6 @@ const Provider = ({ children }) => {
 
   api.defaults.headers.authorization = `Bearer ${token}`;
 
-  console.log(user);
   useEffect(() => {
     if (!!token) {
       api

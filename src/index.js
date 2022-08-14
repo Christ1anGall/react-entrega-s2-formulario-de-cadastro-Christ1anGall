@@ -5,6 +5,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import Provider from "./context/UserProvider";
+import ModalContext from "./context/ModalProvider";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -12,7 +13,9 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Provider>
-        <App />
+        <ModalContext>
+          <App />
+        </ModalContext>
       </Provider>
     </BrowserRouter>
   </React.StrictMode>

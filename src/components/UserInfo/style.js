@@ -3,12 +3,12 @@ import styled from "styled-components";
 const UserContainer = styled.div`
   color: white;
   display: flex;
-
   border-bottom: 2px solid var(--gray-3);
   align-items: flex-start;
   flex-direction: column;
   justify-content: center;
-  padding: 3rem 1rem;
+  padding: 3rem 4rem;
+  padding-top: 6rem;
   gap: 12px;
 
   h2 {
@@ -27,7 +27,8 @@ const UserContainer = styled.div`
 
   @media only screen and (min-width: 600px) {
     flex-direction: row;
-    padding: 0 22%;
+    padding: 0 23%;
+    padding-top: 10vh;
     justify-content: space-between;
     height: 8rem;
     align-items: center;

@@ -8,14 +8,13 @@ const BodyContainer = styled.section`
 
   ul {
     background: var(--gray-3);
-    height: 100px;
     border-radius: 4px;
     padding: 0;
   }
 
   @media only screen and (min-width: 600px) {
     flex-direction: column;
-    padding: 0 22%;
+    padding: 0 23%;
   }
 `;
 
