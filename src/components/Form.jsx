@@ -1,18 +1,15 @@
+import { schemaRegister, schemaLogin } from "./schema/schema";
 import { Container, FormMain, LinkForm } from "./style";
+import { useContext, useEffect, useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useNavigate } from "react-router-dom";
+import { UserContext } from "../context/UserProvider";
 import "react-toastify/dist/ReactToastify.css";
 import { BiErrorCircle } from "react-icons/bi";
 import { useForm } from "react-hook-form";
-import { toast } from "react-toastify";
 import { ImEye } from "react-icons/im";
-import { schemaRegister, schemaLogin } from "./schema/schema";
-import { useEffect, useState } from "react";
-import api from "../api/api";
 
-export const FormLogin = ({ setUser }) => {
-  let navigate = useNavigate();
-
+export const FormLogin = () => {
+  const { requestUser } = useContext(UserContext);
   const [showPassword, setShowPassword] = useState(true);
   const [infoLoginPasswordRed, setInfoLoginPasswordRed] = useState("white");
 
@@ -24,30 +21,6 @@ export const FormLogin = ({ setUser }) => {
     resolver: yupResolver(schemaLogin),
   });
 
-  const onSubmit = (data) => {
-    api
-      .post("/sessions", data)
-      .then((res) => {
-        const notify = () =>
-          toast.success(`Bem vindo ${res.data.user.name}!`, {
-            theme: "dark",
-          });
-        setUser(res.data.user);
-        window.localStorage.setItem("@TOKEN", res.data.token);
-        window.localStorage.setItem("@USERID", res.data.user.id);
-        notify();
-        navigate("../Dashboard", { replace: true });
-      })
-      .catch((err) => {
-        console.log(err);
-        const notify = () =>
-          toast.error(`ops!! email ou senha não confere!`, {
-            theme: "dark",
-          });
-        notify();
-      });
-  };
-
   let errorPassword = errors.password;
   useEffect(() => {
     if (errorPassword) {
@@ -58,7 +31,7 @@ export const FormLogin = ({ setUser }) => {
   }, [errorPassword]);
 
   return (
-    <FormMain onSubmit={handleSubmit(onSubmit)}>
+    <FormMain onSubmit={handleSubmit(requestUser)}>
       <h1>Login</h1>
 
       <label htmlFor="email">Email</label>
@@ -95,6 +68,7 @@ export const FormLogin = ({ setUser }) => {
 };
 
 export const FormRegister = () => {
+  const { createUser } = useContext(UserContext);
   const {
     register,
     handleSubmit,
@@ -102,36 +76,9 @@ export const FormRegister = () => {
   } = useForm({
     resolver: yupResolver(schemaRegister),
   });
-  let navigate = useNavigate();
-
-  const onSubmit = (data) => {
-    const { email, password, name, bio, contact, course_module } = data;
-
-    const dataSend = {
-      email,
-      password,
-      name,
-      bio,
-      contact,
-      course_module,
-    };
-
-    api
-      .post("/users", dataSend)
-      .then((res) => {
-        window.localStorage.setItem("@USERID", res.data.user.id);
-        const notify = () => toast("Conta criada com sucesso!");
-        notify();
-        navigate("../login", { replace: true });
-      })
-      .catch((err) => {
-        const notifyError = () => toast(`Ops! ${err.response.data.message}`);
-        notifyError();
-      });
-  };
 
   return (
-    <FormMain onSubmit={handleSubmit(onSubmit)}>
+    <FormMain onSubmit={handleSubmit(createUser)}>
       <h1>Crie sua conta</h1>
       <p>Rapido e grátis, vamos nessa</p>
 
@@ -201,7 +148,6 @@ export const FormRegister = () => {
         </option>
         <option value="Quarto Módulo (Backend Avançado)">Quarto Módulo</option>
       </select>
-
       <button type="submit">Cadastrar</button>
     </FormMain>
   );

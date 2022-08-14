@@ -1,7 +1,7 @@
 import { FormLogin } from "../components/Form";
 
-const Login = ({ setUser }) => {
-  return <FormLogin setUser={setUser} />;
+const Login = () => {
+  return <FormLogin />;
 };
 
 export default Login;
