@@ -1,21 +1,54 @@
+import { UserContext } from "../../context/UserProvider";
 import ButtonCreateTechs from "../ButtonCreateTechs";
 import ListTechs from "../ListTechs/ListTechs";
 import BodyContainer from "./style";
+import { useContext, useEffect } from "react";
+import { ModalProvider } from "../../context/ModalProvider";
+import api from "../../api/api";
+import { useState } from "react";
 
 const Body = () => {
+  const { user } = useContext(UserContext);
+  const { isModalON } = useContext(ModalProvider);
+
+  const [techs, setTechs] = useState([]);
+
+  useEffect(() => {
+    api.get(`/users/${user.id}`).then((res) => {
+      setTechs(res.data.techs);
+    });
+    return () => {
+      api.get(`/users/${user.id}`).then((res) => {
+        setTechs(res.data.techs);
+      });
+    };
+  }, [user]);
+
+  useEffect(() => {
+    api.get(`/users/${user.id}`).then((res) => {
+      setTechs(res.data.techs);
+    });
+    return () => {
+      api.get(`/users/${user.id}`).then((res) => {
+        setTechs(res.data.techs);
+      });
+    };
+  }, [isModalON]);
+
   return (
     <BodyContainer>
       <ButtonCreateTechs />
       <ul>
-        {/* user.techs.map((value)=>{
-return <ListTechs id={value.id} />;
-        }) */}
-        <ListTechs id={"1"} />
-        <ListTechs id={"2"} />
-        <ListTechs id={"3"} />
-        <ListTechs id={"11"} />
-        <ListTechs id={"22"} />
-        <ListTechs id={"33"} />
+        {techs.map((tech) => {
+          return (
+            <ListTechs
+              key={tech.id}
+              id={tech.id}
+              title={tech.title}
+              status={tech.status}
+            />
+          );
+        })}
       </ul>
     </BodyContainer>
   );

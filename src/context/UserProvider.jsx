@@ -12,17 +12,15 @@ const Provider = ({ children }) => {
 
   const token = localStorage.getItem("@TOKEN");
 
-  api.defaults.headers.authorization = `Bearer ${token}`;
-
   useEffect(() => {
-    if (!!token) {
-      api
-        .get("/profile")
-        .then((res) => setUser(res.data))
-        .catch(() => {
-          localStorage.clear();
-        });
-    }
+    token
+      ? api
+          .get("/profile")
+          .then((res) => setUser(res.data))
+          .catch(() => {
+            localStorage.clear();
+          })
+      : navigate("../Login", { replace: true });
   }, [token]);
 
   const requestUser = async (data) => {
@@ -82,7 +80,7 @@ const Provider = ({ children }) => {
   };
 
   return (
-    <UserContext.Provider value={{ user, requestUser, createUser }}>
+    <UserContext.Provider value={{ user, requestUser, createUser, setUser }}>
       {children}
     </UserContext.Provider>
   );
