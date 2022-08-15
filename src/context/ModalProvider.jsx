@@ -16,6 +16,7 @@ const ModalContext = ({ children }) => {
 
   const Modal = () => {
     const createTech = (data) => {
+      console.log(data);
       api
         .post("/users/techs", data)
         .then(() => {

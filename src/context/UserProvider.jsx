@@ -11,15 +11,10 @@ const Provider = ({ children }) => {
   const [user, setUser] = useState({});
 
   const token = localStorage.getItem("@TOKEN");
-
+  api.defaults.headers.authorization = `Bearer ${token}`;
   useEffect(() => {
     token
-      ? api
-          .get("/profile")
-          .then((res) => setUser(res.data))
-          .catch(() => {
-            localStorage.clear();
-          })
+      ? api.get("/profile").then((res) => setUser(res.data))
       : navigate("../Login", { replace: true });
   }, [token]);
 
