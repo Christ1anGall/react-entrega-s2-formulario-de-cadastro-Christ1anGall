@@ -28,6 +28,7 @@ const Body = () => {
     api.get(`/users/${user.id}`).then((res) => {
       setTechs(res.data.techs);
     });
+
     return () => {
       api.get(`/users/${user.id}`).then((res) => {
         setTechs(res.data.techs);

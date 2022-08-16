@@ -22,6 +22,9 @@ const TechsMainContainer = styled.div`
     font-weight: 600;
     font-size: 22px;
     line-height: 18px;
+    &:hover {
+      background: var(--gray-2);
+    }
   }
 `;
 

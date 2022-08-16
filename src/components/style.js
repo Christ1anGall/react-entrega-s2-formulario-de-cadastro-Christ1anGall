@@ -101,6 +101,9 @@ export const FormMain = styled.form`
     font-size: 12.8347px;
     line-height: 21px;
     margin-bottom: 1rem;
+    &:hover {
+      background: var(--color-primary-focus);
+    }
   }
 
   p {
@@ -118,6 +121,25 @@ export const FormMain = styled.form`
     flex-direction: column;
     a {
       text-align: center;
+    }
+
+    a:hover {
+      background: var(--gray-2);
+      border: 1px solid transparent;
+      animation: alternate 0.5s infinite Link-Jump;
+    }
+
+    @keyframes Link-Jump {
+      10% {
+        background: var(--gray-3);
+      }
+      50% {
+        background: gray;
+        box-shadow: -1px 5px 47px 50px rgba(255, 255, 255, 0.37);
+      }
+      100% {
+        background: var(--gray-5);
+      }
     }
   }
   @media only screen and (min-width: 600px) {

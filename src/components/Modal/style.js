@@ -95,9 +95,17 @@ const ModalContainer = styled.div`
             color: var(--gray-0);
 
             min-height: 2.3rem;
+
+            &:hover {
+              background: var(--gray-2);
+            }
           }
           button:first-child {
             background: var(--color-primary);
+
+            &:hover {
+              background: var(--color-primary-focus);
+            }
           }
 
           .button-Create {

@@ -12,6 +12,7 @@ const Provider = ({ children }) => {
 
   const token = localStorage.getItem("@TOKEN");
   api.defaults.headers.authorization = `Bearer ${token}`;
+
   useEffect(() => {
     token
       ? api.get("/profile").then((res) => setUser(res.data))
@@ -22,11 +23,12 @@ const Provider = ({ children }) => {
     await api
       .post("/sessions", data)
       .then((res) => {
+        console.log(res.data.user);
+        setUser(res.data.user);
         const notify = () =>
           toast.success(`Bem vindo ${res.data.user.name}!`, {
             theme: "dark",
           });
-        setUser(res.data.user);
         localStorage.setItem("@TOKEN", res.data.token);
         localStorage.setItem("@USERID", res.data.user.id);
         notify();

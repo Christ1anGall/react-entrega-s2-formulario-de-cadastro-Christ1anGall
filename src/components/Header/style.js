@@ -17,6 +17,13 @@ const HeaderMain = styled.nav`
     border: none;
     padding: 0.5rem 1rem;
     color: white;
+    button:hover {
+      background: var(--gray-2);
+    }
+
+    &:hover {
+      background: var(--gray-2);
+    }
   }
 
   @media only screen and (min-width: 600px) {
